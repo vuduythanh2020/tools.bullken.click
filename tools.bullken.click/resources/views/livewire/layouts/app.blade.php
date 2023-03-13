@@ -3,6 +3,7 @@
 <head>
     <title>@yield('title')</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @livewireStyles
 </head>
 <body>
     <livewire:header />
@@ -10,10 +11,7 @@
         @yield('content')
     </div>
 
-    <div>
-        @livewire('footer')
-    </div>
-
+    <livewire:footer />
     @livewireScripts
 </body>
 </html>

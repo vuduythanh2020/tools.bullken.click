@@ -6,10 +6,7 @@
             </a>
         </div>
         <nav class="md:ml-auto flex flex-wrap items-center text-base justify-center">
-            <a class="mr-5 hover:text-gray-900" href="#">Hom</a>
-            <a class="mr-5 hover:text-gray-900" href="#">Services</a>
-            <a class="mr-5 hover:text-gray-900" href="#">About</a>
-            <a class="mr-5 hover:text-gray-900" href="#">Contact</a>
+            <a class="mr-5 hover:text-gray-900" href="{{ route('home') }}">Repeat Request</a>
         </nav>
     </div>
 </header>
