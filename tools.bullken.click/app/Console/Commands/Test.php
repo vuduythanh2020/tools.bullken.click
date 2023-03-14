@@ -26,6 +26,8 @@ class Test extends Command
      */
     public function handle(): void
     {
-        Log::debug('Ono');
+        $url = 'https://abc.com/xxx-tgd/ggg';
+        $endPoint = parse_url($url);
+        dd($endPoint);
     }
 }

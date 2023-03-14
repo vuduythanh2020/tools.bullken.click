@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Http\Services\ToolService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -11,7 +12,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->bind(ToolService::class, function ($app) {
+            return new ToolService();
+        });
     }
 
     /**
@@ -19,6 +22,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        if ($this->app->environment('production')) {
+            \URL::forceScheme('https');
+        }
     }
 }

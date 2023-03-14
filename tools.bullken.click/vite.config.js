@@ -18,10 +18,8 @@ export default defineConfig({
             refresh: ['resources/css/app.css'],  // <-- will refresh css (tailwind ) as well
         }),
     ],
-
     server: {
         host: true,
         port: 5173,
-        https: true
     }
 });

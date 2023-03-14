@@ -51,12 +51,14 @@
                     type="submit">
                     Create
                 </button>
-                @if ($success)
-                    <div class="alert alert-success">
-                        {{ $success }}
-                    </div>
-                @endif
             </div>
+            @if ($success)
+                <div class="mt-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative"
+                     role="alert">
+                    <span class="block sm:inline">{{$success}}</span>
+                    <span class="absolute top-0 bottom-0 right-0 px-4 py-3"></span>
+                </div>
+            @endif
         </form>
     </div>
 </div>

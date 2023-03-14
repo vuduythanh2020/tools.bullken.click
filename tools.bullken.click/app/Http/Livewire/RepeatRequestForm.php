@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Http\Services\ToolService;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -15,16 +16,15 @@ class RepeatRequestForm extends Component
     public $headers;
 
     protected $rules = [
-        'url' => 'required|min:6',
-        'body' => 'required',
+        'url' => 'required|url',
+        'body' => '',
         'headers' => 'required|array'
     ];
 
     public function submitForm()
     {
         $this->validate();
-        Log::debug('headers', $this->headers);
-        session()->flash('success', 'Content created successfully!');
+        session()->flash('success', (new ToolService())->repeatRequest($this->url, $this->headers, $this->body));
         $this->reset(['url', 'headers', 'body']);
     }
 
