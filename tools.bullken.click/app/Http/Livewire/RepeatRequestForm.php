@@ -10,20 +10,30 @@ use Livewire\Component;
 
 class RepeatRequestForm extends Component
 {
-    public $title;
+    public $url;
     public $body;
+    public $headers;
 
     protected $rules = [
-        'title' => 'required|min:6',
+        'url' => 'required|min:6',
         'body' => 'required',
+        'headers' => 'required|array'
     ];
 
     public function submitForm()
     {
         $this->validate();
-        Log::debug($this->title);
+        Log::debug('headers', $this->headers);
         session()->flash('success', 'Content created successfully!');
-        $this->reset(['title', 'body']);
+        $this->reset(['url', 'headers', 'body']);
+    }
+
+    public function addData()
+    {
+        $this->headers[] = [
+            'key' => '',
+            'value' => ''
+        ];
     }
 
     public function render(): View|\Illuminate\Foundation\Application|Factory|Application

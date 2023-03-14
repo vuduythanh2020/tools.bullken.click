@@ -26,6 +26,7 @@ services:
     image: nginx:latest
     ports:
       - "1001:80"
+      - "10013:443"
     volumes:
       - ./:/var/www
       - ./nginx/conf.d/:/etc/nginx/conf.d/
