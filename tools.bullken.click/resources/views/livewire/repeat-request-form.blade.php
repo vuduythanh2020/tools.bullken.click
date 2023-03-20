@@ -19,13 +19,13 @@
                         <div class="grid grid-cols-2 gap-2 items-center mb-4">
                             <div class="relative z-0 w-full mb-6 group">
                                 <label class="block text-gray-700 text-sm" for="key{{ $index }}">Key:</label>
-                                <input
+                                <input placeholder="Authorization"
                                     class="w-full shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                     id="key{{ $index }}" type="text" wire:model="headers.{{ $index }}.key"/>
                             </div>
                             <div class="relative z-0 w-full mb-6 group">
                                 <label class="block text-gray-700 text-sm" for="value{{ $index }}">Value:</label>
-                                <input
+                                <input placeholder="Bearer ..."
                                     class="w-full shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                     id="value{{ $index }}" type="text" wire:model="headers.{{ $index }}.value"/>
                             </div>
@@ -39,10 +39,9 @@
             </div>
             <div class="p-4">
                 <label class="block text-gray-700 font-bold mb-2" for="body">
-                    Body raw
+                    Body raw (json)
                 </label>
-                <textarea wire:model="body"
-                          class="border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
+                <textarea id="bodyArea" wire:model="body" x-ref="myTextarea" class="resize-none w-full h-32 p-2 border rounded focus:outline-none"></textarea>
                 @error('body') <span class="text-red-500">{{ $message }}</span>@enderror
             </div>
             <div class="flex items-center justify-end">

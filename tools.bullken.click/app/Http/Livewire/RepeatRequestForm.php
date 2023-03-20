@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use App\Http\Services\ToolService;
+use Exception;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -18,7 +19,7 @@ class RepeatRequestForm extends Component
     protected $rules = [
         'url' => 'required|url',
         'body' => '',
-        'headers' => 'required|array'
+        'headers' => 'array'
     ];
 
     public function submitForm()
@@ -34,6 +35,16 @@ class RepeatRequestForm extends Component
             'key' => '',
             'value' => ''
         ];
+    }
+
+    public function updatedBody()
+    {
+        try {
+            $json = json_decode($this->body);
+            $this->body = is_array($json) ? json_encode($json, JSON_PRETTY_PRINT) : $this->body;
+        } catch (Exception $e) {
+            // Nếu nội dung nhập vào không phải định dạng JSON, bỏ qua.
+        }
     }
 
     public function render(): View|\Illuminate\Foundation\Application|Factory|Application

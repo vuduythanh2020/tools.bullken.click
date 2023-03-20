@@ -17,12 +17,13 @@ class ToolService
         foreach ($headers as $header) {
             $flashHeaders = array_merge($flashHeaders, $header);
         }
-        $client   = new Client([
+        $flashHeaders['Content-Type'] = 'application/json';
+        $client                       = new Client([
             'base_uri' => $baseUri,
             'headers' => $flashHeaders
         ]);
-        $method   = $body ? 'postAsync' : 'getAsync';
-        $promises = [];
+        $method                       = $body ? 'postAsync' : 'getAsync';
+        $promises                     = [];
         for ($i = 0; $i < $count; $i++) {
             if ($method == 'postAsync') {
                 $promises[] = $client->postAsync($endPoint, ['json' => json_decode($body, true)]);
