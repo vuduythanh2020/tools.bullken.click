@@ -22,7 +22,7 @@ jobs:
       env:
         SSH_AUTH_SOCK: /tmp/ssh_agent.sock
     - name: Remove old host key
-      run: ssh-keygen -R example.com
+      run: ssh-keygen -R 194.233.91.59
 
     - name: Deploy to Server
       run: |
