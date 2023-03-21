@@ -17,15 +17,7 @@ jobs:
       uses: webfactory/ssh-agent@v0.5.0
       with:
         ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-    - name: Get host key
-      run: echo "${{ secrets.SSH_PRIVATE_KEY }}" | ssh-keyscan 194.233.91.59 > ssh_known_hosts
-      env:
-        SSH_AUTH_SOCK: /tmp/ssh_agent.sock
-    - name: Remove old host key
-      run: ssh-keygen -R 194.233.91.59
 
     - name: Deploy to Server
       run: |
         ssh -o StrictHostKeyChecking=no root@194.233.91.59 "cd websites/tools.bullken.click.www && git pull origin master && docker exec -w /var/www/tools.bullken.click toolsbullkenclickwww-app-1 composer install && docker exec -w /var/www/tools.bullken.click toolsbullkenclickwww-app-1 npm run build"
-      env:
-        SSH_AUTH_SOCK: /tmp/ssh_agent.sock
