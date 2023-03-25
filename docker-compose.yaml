@@ -9,9 +9,9 @@ services:
       DB_CONNECTION: mysql
       DB_HOST: db
       DB_PORT: 3306
-      DB_DATABASE: mydb
+      DB_DATABASE: tools
       DB_USERNAME: root
-      DB_PASSWORD: example
+      DB_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     ports:
       - "5173:5173"
     working_dir: /var/www
@@ -21,6 +21,7 @@ services:
       - tools_bullken
     depends_on:
       - db
+      - kafka
 
   webserver:
     image: nginx:latest
@@ -36,10 +37,38 @@ services:
       - tools_bullken
 
   db:
-    image: mariadb:latest
+    image: mariadb:10.7.8
+    ports:
+      - "10016:3306"
+    restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: example
-      MYSQL_DATABASE: mydb
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: tools
+    networks:
+      - tools_bullken
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - '22181:2181'
+    networks:
+      - tools_bullken
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    depends_on:
+      - zookeeper
+    ports:
+      - '29092:29092'
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
     networks:
       - tools_bullken
 

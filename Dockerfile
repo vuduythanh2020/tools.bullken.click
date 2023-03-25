@@ -1,17 +1,38 @@
 FROM php:8.2-fpm
 
-# Cài đặt các gói cần thiết để cài đặt các extension
-RUN apt-get update && apt-get install -y \
-    libfreetype6-dev \
-    libjpeg62-turbo-dev \
-    libpng-dev \
-    libzip-dev \
-    unzip \
+# Packages
+RUN apt-get update  \
+    && apt-get install -y --no-install-recommends \
+    git \
     curl \
-    && docker-php-ext-install pdo_mysql \
-    && docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/ \
-    && docker-php-ext-install gd \
-    && docker-php-ext-install zip
+    wget \
+    libmemcached-dev \
+    libz-dev \
+    libpq-dev \
+    libmcrypt-dev \
+    libzip-dev \
+    libpng-dev \
+    zip \
+    unzip \
+    nano \
+    autoconf  \
+    libc-dev pkg-config libssl-dev zlib1g-dev librdkafka-dev \
+    libfreetype6-dev \
+    libjpeg62-turbo-dev
+
+# PHP extensions
+RUN docker-php-ext-install -j$(nproc) \
+    pdo_mysql \
+    pdo_pgsql \
+    zip \
+    sockets \
+    bcmath \
+    gd \
+  && pecl install rdkafka \
+  && docker-php-ext-enable rdkafka \
+  && pecl install redis && docker-php-ext-enable redis \
+  && pecl install mongodb && docker-php-ext-enable mongodb \
+  && docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/ \
 
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
