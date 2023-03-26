@@ -32,7 +32,7 @@ RUN docker-php-ext-install -j$(nproc) \
   && docker-php-ext-enable rdkafka \
   && pecl install redis && docker-php-ext-enable redis \
   && pecl install mongodb && docker-php-ext-enable mongodb \
-  && docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/ \
+  && docker-php-ext-configure gd --with-freetype=/usr/include/ --with-jpeg=/usr/include/
 
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer

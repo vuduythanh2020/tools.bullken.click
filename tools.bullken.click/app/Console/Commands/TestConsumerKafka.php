@@ -8,9 +8,9 @@ use Junges\Kafka\Contracts\KafkaConsumerMessage;
 
 class TestConsumerKafka extends Command
 {
-    protected $signature = "consume:my-topic";
+    protected $signature = "consume:kafka";
 
-    protected $description = "Consume Kafka messages from 'my-topic'.";
+    protected $description = "Consume Kafka messages from topic";
 
     public function handle()
     {
